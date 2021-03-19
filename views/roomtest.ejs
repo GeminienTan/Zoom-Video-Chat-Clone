@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1>Room test <h1>
+
+    <h2><%= u_id %><h2>
+    <h2><%= u_name %><h2>
+    <h2><%= guestName %></h2>
+
+    <div id= "recordPane"></div>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" width=90% src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+
+    <h2>Meeting info</h2>
+    <br>
+    <%for (var i in meeting) {%>
+    <p><%= meeting[i].m_id %></p>
+    <p>Meeting started at <%= moment(meeting[i].m_stime).format( 'hh:mm A') %></p>
+    <p><%= meeting[i].host_name %> entered.</p>
+
+    <h2>Participant List</h2>
+    <%for (var j in participant) {
+        if(participant[j].m_id == meeting[i].m_id){ %>
+            <p><%= participant[j].mp_id %></p>
+            <p><%= participant[j].mp_type %></p>
+
+            <% if(participant[j].user_name != null){ %>
+                <p>User <%= participant[j].user_name %> entered at <%= moment(participant[j].mp_join_time).format( 'hh:mm A') %></p>
+            <%}%>
+            
+            <% if(participant[j].guest_name != null){ %>
+            <p>Guest <%= participant[j].guest_name %> entered at <%= moment(participant[j].mp_join_time).format( 'hh:mm A') %></p>
+            <%}%>
+
+    <%if(participant[j].mp_leave_time != null){ %>
+        <% if(participant[j].user_name != null){ %>
+            <p>User <%= participant[j].user_name %> left at <%= moment(participant[j].mp_leave_time).format( 'hh:mm A') %></p>
+        <%}%>
+        <% if(participant[j].guest_name != null){ %>
+            <p>Guest <%= participant[j].guest_name %> left at <%= moment(participant[j].mp_leave_time).format( 'hh:mm A') %></p>
+            <%}%>
+
+    <%} %>       
+            
+    <% }
+    
+}%>
+        <% if (meeting[i].c_id !=null){%>
+            
+            <h2> Channel Message</h2>
+            
+            <%for (var k in channel_message) {
+                if(channel_message[k].c_id == meeting[i].c_id){ %>
+                    <p><%= channel_message[k].ch_content %></p>
+                    <p><%= channel_message[k].sender_name %></p>
+                    <p><%= channel_message[k].ch_datetime %></p>
+            <% }
+                }%>
+    
+        <% } %>
+        <% if (meeting[i].cv_id !=null  ){%>
+            
+            <h2> Conversation Info </h2>
+                <div class="content empty">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <% for(var m in chat_message){ 
+                                
+                                if(chat_message[m].cv_id == meeting[i].cv_id){ %>
+                                            <% if(chat_message[m].receiver_id == u_id){ %>
+                                            <div class="message ">
+                                                <img class="avatar-md" src="<%= chat_message[m].sender_profilepic%>" data-toggle="tooltip" data-placement="top" title="<%= chat_message[m].sender_name%>" alt="avatar">
+                                                <div class="text-main">
+                                                    <div class="text-group border border-info rounded text text-info">	
+                                                            <p><%= chat_message[m].cm_content %></p>
+                                                            <a>hello</a>	
+                                                    </div>
+                                                    
+                                                    <span><%= moment(chat_message[m].cm_datetime).format( 'DD MMM YYYY HH:mm') %></span>
+                                                </div>
+                                            </div>
+                                            <% if(chat_message[m].cm_file != null){ %>
+                                                <div class="message">
+                                                    <img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+                                                    <div class="text-main">
+                                                        <div class="text-group">
+                                                            <div class="text">
+                                                                <div class="attachment">
+                                                                    <button class="btn attach"><i class="material-icons md-18">insert_drive_file</i></button>
+                                                                    <div class="file">
+                                                                        <h5><a href="#">Tenacy Agreement.pdf</a></h5>
+                                                                        <span></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <span>11:07 PM</span>
+                                                    </div>
+                                                </div>
+                                            <% } %>
+
+                                                <% }
+                                        else if(chat_message[m].sender_id == u_id){ %>
+                                            <div class="message me">
+                                                <div class="text-main">
+                                                    <div class="text-group me">
+                                                        <div class="text me">
+                                                            <p><%= chat_message[m].cm_content %></p>
+                                                        </div>
+                                                    </div>
+                                                    <span><%= moment(chat_message[m].cm_datetime).format( 'DD MMM YYYY HH:mm') %></span>
+                                                </div>
+                                                <img class="avatar-md" src="<%= chat_message[m].sender_profilepic%>" data-toggle="tooltip" data-placement="top" title="Me" alt="avatar"> 
+                                            </div>	
+                                            <% if(chat_message[m].cm_file != null){ %>
+                                                <div class="message me">
+                                                    <div class="text-main">
+                                                        <div class="text-group me">
+                                                            <div class="text me">
+                                                                <div class="attachment">
+                                                                    <button class="btn attach"><i class="material-icons md-18">insert_drive_file</i></button>
+                                                                    <div class="file">
+                                                                        <h5><a href="dist/file/UECS3383_Topic_05_-_Utilization_of_Metrices_1a_.pdf" download><%= chat_message[m].cm_file %></a></h5>
+                                                                        <span><%= chat_message[m].cm_content %></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-group me">
+                                                            <div class="text me">
+                                                                <p><%= chat_message[m].cm_content %></p>
+                                                            </div>
+                                                        </div>
+                                                        <span><%= moment(chat_message[m].cm_datetime).format( 'DD MMM YYYY hh:mm') %></span>
+                                                    </div><img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+                                                </div>
+                                            <% } %>		
+                                        <%}
+                                }
+                            } %>
+                        </div>
+                    </div>
+                </div>
+    
+        <% } %>
+
+
+
+    <% } %>
+    <script>
+    window.addEventListener("beforeunload", function (e) {
+        var confirmationMessage = "\o/";
+      
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;                            //Webkit, Safari, Chrome
+      });                           //Webkit, Safari, Chrome
+    </script>
+    <script src="dist/js/room.js"></script>
+    <script src="dist/js/video.js"></script>
+    </body>
+</html>

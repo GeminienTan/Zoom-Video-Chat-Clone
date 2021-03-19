@@ -1,0 +1,195 @@
+[
+  {
+    "notification": "New Message",
+    "from": "Tan Ying En",
+    "u_id": [
+      3
+    ],
+    "date": "2021-03-17 19:16:12",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "New Message",
+    "from": "Tan Ying En",
+    "u_id": [
+      1
+    ],
+    "date": "2021-03-17 19:18:56",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "New Message",
+    "from": "Tan Ying En",
+    "u_id": [
+      1,
+      2,
+      3,
+      32
+    ],
+    "date": "2021-03-17 19:19:12",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "New Message",
+    "from": "Tan Ying En",
+    "u_id": 1,
+    "date": "2021-03-17 19:21:54",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "Calling from",
+    "from": "Jane Chong",
+    "u_id": [
+      4
+    ],
+    "date": "2021-03-18 16:18:46",
+    "status": "unread",
+    "type": "video_call"
+  },
+  {
+    "notification": "start a meeting at qq333",
+    "from": "Tan Ying En",
+    "u_id": [
+      1,
+      33
+    ],
+    "date": "2021-03-18 16:26:50",
+    "status": "unread",
+    "type": "video_call"
+  },
+  {
+    "notification": "start a meeting at Room 2 Channel 2",
+    "from": "Jane Chong",
+    "u_id": [
+      4,
+      2,
+      33
+    ],
+    "date": "2021-03-18 16:29:15",
+    "status": "unread",
+    "type": "video_call"
+  },
+  {
+    "notification": "start a meeting at Room 1 qx",
+    "from": "Jane Chong",
+    "u_id": [
+      4,
+      2
+    ],
+    "date": "2021-03-18 17:22:27",
+    "status": "unread",
+    "type": "video_call"
+  },
+  {
+    "notification": "start a meeting at Room 1 ddd",
+    "from": "Jane Chong",
+    "u_id": [
+      4,
+      2
+    ],
+    "date": "2021-03-18 17:23:35",
+    "status": "unread",
+    "type": "video_call"
+  },
+  {
+    "notification": "New Message in inbox",
+    "from": "Jane Chong",
+    "u_id": 4,
+    "date": "2021-03-18 17:24:13",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "New Message in inbox",
+    "from": "Jane Chong",
+    "u_id": [
+      33
+    ],
+    "date": "2021-03-18 17:25:11",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "has just send a message Room 10 Default",
+    "from": "Tan Ying En",
+    "u_id": [
+      2,
+      3
+    ],
+    "date": "2021-03-18 18:19:59",
+    "status": "unread",
+    "type": "chat"
+  },
+  {
+    "notification": "has just added you into Room 9 ",
+    "from": "Tan Ying En",
+    "u_id": [],
+    "date": "2021-03-18 18:36:37",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into Room 9 ",
+    "from": "Tan Ying En",
+    "u_id": [],
+    "date": "2021-03-18 18:36:38",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into q1xdd ",
+    "from": "Tan Ying En",
+    "u_id": "Jennifer Tan",
+    "date": "2021-03-18 18:38:50",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into q1xdd ",
+    "from": "Tan Ying En",
+    "u_id": "33",
+    "date": "2021-03-18 18:38:51",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into Room 10 ",
+    "from": "Tan Ying En",
+    "u_id": 1,
+    "date": "2021-03-18 18:41:01",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into Room 10 ",
+    "from": "Tan Ying En",
+    "u_id": 1,
+    "date": "2021-03-18 18:41:02",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into Room 9 ",
+    "from": "Tan Ying En",
+    "u_id": [
+      3
+    ],
+    "date": "2021-03-18 18:42:13",
+    "status": "unread",
+    "type": "person_add"
+  },
+  {
+    "notification": "has just added you into Room 9 ",
+    "from": "Tan Ying En",
+    "u_id": [
+      3
+    ],
+    "date": "2021-03-18 18:42:14",
+    "status": "unread",
+    "type": "person_add"
+  }
+]

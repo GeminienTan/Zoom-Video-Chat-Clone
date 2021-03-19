@@ -1,0 +1,221 @@
+
+
+<!-- Start of Create Room -->
+<div class="modal fade" id="addRoom" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="requests">
+            <div class="title">
+                <h1>Create a Room</h1>
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+            </div>
+            <div class="content">
+                <form action="addRoom" method="POST">
+                    <input type="hidden" id="owner_id" name="owner_id" value="<%= u_id %>">
+                    <div class="form-group">
+                        <label for="participant">Room Title:</label>
+                        <input type="text" class="form-control" id="roomName" name="r_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Room Description:</label>
+                        <textarea class="text-control" id="roomDesc" name="r_desc" placeholder="The room is for ..." ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant">Channel Title:</label>
+                        <input type="text" class="form-control" id="channelTitle" name="c_title" placeholder="Default" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Channel Description:</label>
+                        <textarea class="text-control" id="channelDesc" name="c_desc" placeholder="This channel is for ..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="participant">Invite User to this Room:</label>
+                        <!--<select class="form-control" multiple id="c_attendees" name="c_attendees">
+                            <% for (var i in contact){%>
+                                <option class="form-control" value="<%= contact[i].u_name %>"><%= contact[i].u_name %></option>
+                            <%} %> 
+                        </select>-->
+                        <select name="c_attendees" class="multiple_select form-control myFilter" multiple>
+                            <% for (var i in contact){%>
+                                <option class="form-control" value="<%= contact[i].u_name %>"><%= contact[i].u_name %></option>
+                            <%} %> 
+                        </select>
+                    
+                    </div>
+                    <button type="submit" class="btn button w-100">Create Room</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Create Room -->
+
+<!-- Start of Add Channel -->
+<div class="modal fade" id="addChannel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="requests">
+            <div class="title">
+                <h1>Create a Channel</h1>
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+            </div>
+            <div class="content">
+                <form action="addChannel" method="POST">
+                    <input type="hidden" id="add-channel-room_id" name="room_id" >
+                    <div class="form-group">
+                        <label for="participant">Channel Title:</label>
+                        <input type="text" class="form-control" id="channelTitle" name="c_title" placeholder="Default" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Channel Description:</label>
+                        <textarea class="text-control" id="channelDesc" name="c_desc" placeholder="This channel is for ..."></textarea>
+                    </div>
+                    <button type="submit" class="btn button w-100">Create Channel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Add Channel -->
+
+<!-- Start of Create Member -->
+<div class="modal fade" id="addMember" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="requests">
+            <div class="title">
+                <h1>Add Member to this Room</h1>
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+            </div>
+            <div class="content">
+                <form action="addMember" method="POST">
+                    <input type="hidden" id="add-member-room_id" name="room_id" >
+                    <div class="form-group">
+                        <label for="participant">Add Member to this Room:</label>
+                        <select name="c_attendees" class="multiple_select form-control myFilter" multiple>
+                            <% for (var i in contact){%>
+                                <option class="form-control" value="<%= contact[i].u_name %>"><%= contact[i].u_name %></option>
+                            <%} %> 
+                        </select>
+                    
+                    </div>
+                    <button type="submit" class="btn button w-100">Add Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Add Member -->
+
+<!-- Start of Add Contacts -->
+<div class="modal fade" id="addContact" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="requests">
+            <div class="title">
+                <h1>Add your friends</h1>
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+            </div>
+            <div class="content">
+                <form action="/addContact" method="POST">
+                    <input type="text" name="u_id" value="<%= u_id %>" hidden>
+                    <div class="form-group">
+                        <label for="user">Email:</label>
+                        <input type="email" class="form-control" id="ct_email" name="ct_email" placeholder="Enter email address" >
+                    </div>
+                    <button type="submit" class="btn button w-100">Add to Contact</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Add Contacts-->
+
+<!-- Start of Add Chat -->
+<div class="modal fade" id="addChat" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered   " role="document">
+        <div class="requests">
+            <div class="title">
+                <h1>Start new chat</h1>
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+            </div>
+            <div class="content">
+                <form action="addChat" method="POST">
+                    <input type="hidden" value="<%= u_id %>" id="sender" name="sender">
+                    <input type="hidden" value="<%= account[0].u_name %>" name="u_name">
+                    <input type="hidden" value="<%= new Date();%>" id="datetime" name="datetime">
+                    <div class="form-group">
+                        <label for="recipient">Recipient:</label>
+                       
+                         <input list="receivers" class="form-control" id="receiver" name="receiver" >
+                         <!-- DataList -->
+                        <datalist id="receivers">
+                        <% for (var i in contact){%>
+                            <option value="<%= contact[i].u_name %>"></option>
+                        <%} %>
+                        </datalist>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea class="text-control" id="content" name="content" >Hi Friends ! </textarea>
+                    </div>
+                    <button type="submit" class="btn button w-100">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Add Chat -->
+
+<!-- Start of Add Schedule -->
+<div class="modal fade" id="addSchedule" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="requests">
+            <div class="title">
+                <h1>Add a Schedule</h1>
+                <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+            </div>
+            <div class="content">
+                <form action="addSchedule" method="POST" >
+                    <input type="text" class="form-control" name="owner_id" value="<%= u_id %>" hidden>
+                    <div class="form-group">
+                        <label for="user">Meeting Title</label>
+                        <input type="text" class="form-control" id="s_title" name="s_title">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="user">Meeting Objective</label>
+                        <input type="text" class="form-control" id="s_objective" name="s_objective">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user">Meeting Date</label>
+                        <input type="date" class="form-control" id="s_date" name="s_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user">Meeting Start Time</label>
+                        <input type="time" class="form-control" id="s_stime"  name="s_stime">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user">Meeting End Time</label>
+                        <input type="time" class="form-control" id="s_etime"  name="s_etime">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user">Required Attendees</label>  
+                        <select name="s_attendees" class="multiple_select form-control myFilter" multiple>
+                            <% for (var i in contact){%>
+                                <option class="form-control" value="<%= contact[i].u_name %>"><%= contact[i].u_name %></option>
+                            <%} %> 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn button w-100">Add Schedule</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Add schedule -->
+
+
+
+

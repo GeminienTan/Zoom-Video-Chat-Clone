@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meego Video Conferencing</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <link href="dist/css/swipe.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <!-- Bootstrap core CSS -->
+		<link href="dist/css/lib/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <script src="https://flashphoner.com/downloads/builds/flashphoner_client/wcs_api-2.0/current/flashphoner.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+      integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const ROOM_ID = "<%=roomId%>";
+      const u_name = "<%=u_name%>";
+      const u_name = "<%=u_name%>"
+    </script>
+  </head>
+  <body onload="init_api()">
+    <h2><%= u_name %></h2>
+    <!--<div class="main">
+      <div class="main__left">
+        <div class="main__videos">
+          
+          <div id="video-grid"><div id="gallery">
+            <div class="video-container"></div></div></div>
+        </div>
+        <div class="main__controls">
+          <div class="main__controls__block">
+            <div
+              onclick="muteUnmute()"
+              class="main__controls__button main__mute_button"
+            >
+              <i class="fas fa-microphone"></i>
+              <span>Mute</span>
+            </div>
+            <div
+              onclick="playStop()"
+              class="main__controls__button main__video_button"
+            >
+              <i class="fas fa-video"></i>
+              <span>Stop Video</span>
+            </div>
+          </div>
+
+          <div class="main__controls__block">
+            <div class="main__controls__button">
+              <i class="fas fa-shield-alt"></i>
+              <span>Security</span>
+            </div>
+            <div class="main__controls__button main__share_button" id="shareButton" >
+              <i class="fas fa-desktop"></i>
+              <span >Share Screen</span>
+            </div>
+            <div class="main__controls__button" id="participantButton">
+              <i class="fas fa-user-friends"></i>
+              <span>Participants</span>
+            </div>
+            <div class="main__controls__button">
+              <i class="fas fa-comment-alt"></i>
+              <span>Chat</span>
+            </div>
+          </div>
+          <div class="main__controls__block">
+            <div class="main__controls__button">
+              <span onclick="leaveMeeting()" class="leave_meeting"
+                >Leave Meeting</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="resizer" id="dragMe"></div>
+      <div class="main__right bside" id="chat">
+        <div class="main__header">
+          <h5>Chat</h5>
+        </div>
+        <div class="main__chat_window">
+          <ul class="messages"></ul>
+        </div>
+        <div class="main__message_container">
+          <input
+            type="text"
+            id="chat_message"
+            placeholder="Type message here..."
+          />
+        </div>
+      </div>
+      <div class="main__right" id="participant" style="display:none;">
+        <div class="main__header">
+          <h5>Participant</h5>
+        </div>
+        <div class="main__chat_window">
+          <ul class="messages"></ul>
+        </div>
+        <div class="main__message_container">
+          <input
+            type="text"
+            id="chat_message"
+            placeholder="Type message here..."
+          />
+        </div>
+      </div>
+      </div>
+    </div>-->
+
+<main>
+  <div class="layout">
+    <!-- Start of Sign In -->
+    <div class="main order-md-1 col-md-9">
+      <div class="start">
+        <div class="container">
+          <div class="col-md-12">
+            <div class="content">
+              <div id="video-me" class="video me">
+                <iframe width="300" height="200"
+                src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                </iframe>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of Sign In -->
+
+    <!-- Start of Sidebar -->
+    <div class="dside order-md-2 col-md-3">
+      <div class="container">
+          <div class="preference">  
+          <ul class="nav nav-tabs">
+            <li class="active"><a class="btn btn-dark mx-1" data-toggle="tab" href="#participant">Participant</a></li>
+            <li><a class="btn btn-dark mx-1" data-toggle="tab" href="#meeting">Meeting Record</a></li>
+            <li><a class="btn btn-dark mx-1" data-toggle="tab" href="#chat">Chat</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="meeting" class="tab-pane fade in active">
+              <h3>Meeting Record</h3>
+              <hr>
+              <span><p>Meeting started : 11.11pm</p></span><hr>
+              <span><p>Christine entered : 11.11pm</p></span><hr>
+              <span><p>Michael entered : 11.11pm</p></span><hr>
+              <span><p>Michael share screen : 11.11pm</p></span><hr>
+              <span><p>Cheah entered : 11.11pm</p></span><hr>
+              <span><p>Michael stop share screen : 11.11pm</p></span><hr>
+              <span><p>Cheah left meeting : 11.11pm</p></span><hr>
+            </div>
+            <div id="chat" class="tab-pane fade">
+              <h3>Chat</h3>
+            </div>
+            <div id="participant" class="tab-pane fade">
+              <h3>Participant List</h3>
+            </div>
+          </div>
+
+          </div>
+        </div>
+    </div>
+    
+  </div> <!-- Layout --><!-- End of Sidebar -->
+    
+</main>
+    <script src="dist/js/script.js"></script>
+    <script src="dist/js/room.js"></script>
+    <script src="dist/js/video.js"></script>
+  </body>
+</html>

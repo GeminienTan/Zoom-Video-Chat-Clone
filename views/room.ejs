@@ -3,17 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zoom Clone</title>
+    <title>Meego Video Conferencing</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link href="dist/css/swipe.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <!-- Bootstrap core CSS -->
+		<link href="dist/css/lib/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    <script src="https://flashphoner.com/downloads/builds/flashphoner_client/wcs_api-2.0/current/flashphoner.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -34,10 +41,12 @@
     </script>
   </head>
   <body>
+    <input type="text" value="<%=u_id%>" id="u_id" >
     <div class="main">
       <div class="main__left">
-        <div class="main__videos">
-          <div id="video-grid"></div>
+        <div class="main__videos" >
+          
+          <div id="video-grid" class="Dish"></div>
         </div>
         <div class="main__controls">
           <div class="main__controls__block">
@@ -58,22 +67,26 @@
           </div>
 
           <div class="main__controls__block">
-            <div class="main__controls__button">
-              <i class="fas fa-shield-alt"></i>
-              <span>Security</span>
+            <div class="main__controls__button main__share_button" id="shareButton" >
+              <i class="fas fa-desktop"></i>
+              <span >Share Screen</span>
             </div>
-            <div class="main__controls__button">
+            <div class="main__controls__button" onclick="showRecord()">
+              <i class="fas fa-info-circle"></i>
+              <span>Info</span>
+            </div>
+            <div class="main__controls__button" onclick="showParticipant()">
               <i class="fas fa-user-friends"></i>
               <span>Participants</span>
             </div>
-            <div class="main__controls__button">
+            <div class="main__controls__button" onclick="showChat()">
               <i class="fas fa-comment-alt"></i>
               <span>Chat</span>
             </div>
           </div>
           <div class="main__controls__block">
             <div class="main__controls__button">
-              <span onclick="leaveMeeting()" class="leave_meeting"
+              <span onclick="leaveMeeting(mp_id)" class="leave_meeting"
                 >Leave Meeting</span
               >
             </div>
@@ -81,9 +94,11 @@
         </div>
       </div>
       <div class="resizer" id="dragMe"></div>
-      <div class="main__right">
+     
+
+      <div class="main__right bside" id="chat" style="display:none">
         <div class="main__header">
-          <h6>Chat</h6>
+          <h5>Chat</h5>
         </div>
         <div class="main__chat_window">
           <ul class="messages"></ul>
@@ -96,8 +111,54 @@
           />
         </div>
       </div>
+      <div class="main__right bside" id="participant" style="display:none">
+        <div class="main__header">
+          <h5>Participant</h5>
+        </div>
+        <div class="main__participant_window">
+          <div class= "table">
+            <table class="table-responsive-md btn-table">
+              <tbody>
+                <% for(var i in meeting) { %>
+                 
+                  <% var y =1
+                  for(var j in participant){ 
+                  if(participant[j].m_id == meeting[i].m_id){ %>
+                  <tr>
+                    <th scope="row"><%= y %></th>
+                    <td><img class="avatar-md" src="<%= participant[j].u_profilepic %>" data-toggle="tooltip" data-placement="top" title="<%= participant[j].u_name %>" alt="avatar"></td>
+                    <td><%= participant[j].u_name %></td>
+                    <td><%= moment(participant[j].mp_join_time).format( 'HH:mm') %></td>
+                  </tr>
+                  
+                <% y+=1} 
+               } %>
+               <% } %>
+              </tbody>
+              
+              </table>
+          </div>
+        </div>
+      </div>
+      <div class="main__right bside" id="record" >
+        <div class="main__header">
+          <h5>Record</h5>
+        </div>
+        <div class="main__record_window" id="recordPane">
+          <hr>
+              <p>Meeting started :</p>
+              <ul class="records"></ul>
+              
+
+        </div>
+        
+      </div>
+      <!-- End meeting-->
+
     </div>
 
-    <script src="script.js"></script>
+    <script src="dist/js/script.js"></script>
+    <script src="dist/js/room.js"></script>
+    <script src="dist/js/video.js"></script>
   </body>
 </html>
