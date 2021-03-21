@@ -117,26 +117,7 @@
         </div>
         <div class="main__participant_window">
           <div class= "table">
-            <table class="table-responsive-md btn-table">
-              <tbody>
-                <% for(var i in meeting) { %>
-                 
-                  <% var y =1
-                  for(var j in participant){ 
-                  if(participant[j].m_id == meeting[i].m_id){ %>
-                  <tr>
-                    <th scope="row"><%= y %></th>
-                    <td><img class="avatar-md" src="<%= participant[j].u_profilepic %>" data-toggle="tooltip" data-placement="top" title="<%= participant[j].u_name %>" alt="avatar"></td>
-                    <td><%= participant[j].u_name %></td>
-                    <td><%= moment(participant[j].mp_join_time).format( 'HH:mm') %></td>
-                  </tr>
-                  
-                <% y+=1} 
-               } %>
-               <% } %>
-              </tbody>
-              
-              </table>
+           
           </div>
         </div>
       </div>

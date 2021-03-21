@@ -819,7 +819,7 @@ app.get("/leaveMeeting/:mp_id", (req, res) => {
 });
 
 app.get("/:room", (req, res) => {
-  const u_id = req.session.u_id;
+  /*const u_id = req.session.u_id;
   const u_name = req.session.u_name;
   const guestName = req.session.guestName;
   //console.log(guestName);
@@ -847,9 +847,9 @@ app.get("/:room", (req, res) => {
       console.log(results[1]);*/
       //console.log(results[2]);
       //console.log(results[3]);
-      //console.log(results[1]);
+      //console.log(results[1]);*/
 
-      res.render('room', {
+      /*res.render('room', {
         moment: moment,
         u_id:u_id,
         u_name:u_name,
@@ -864,7 +864,8 @@ app.get("/:room", (req, res) => {
 
   } else {
     res.status(404).json({ error: true, msg: "Room Not found" });
-  }
+  }*/
+  res.render('room');
 });
 
 io.on("connection", (socket) => {
