@@ -11,10 +11,14 @@
       crossorigin="anonymous"
     />
     <link href="dist/css/swipe.min.css" type="text/css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.0/viewer.min.js"></script>
+
     <link rel="stylesheet" href="dist/css/style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <!-- Bootstrap core CSS -->
 		<link href="dist/css/lib/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
@@ -36,17 +40,53 @@
       integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
       crossorigin="anonymous"
     ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
-      const ROOM_ID = "123";
+      const ROOM_ID = "<%=roomId%>";
+      const host_id = "<%=meeting[0].host_id%>";
+      const u_id = "<%=u_id%>";
+      const u_name = "<%=u_name%>";
+      const g_id = "<%=g_id%>";
+      const g_name = "<%=g_name%>";
+
+      
     </script>
   </head>
   <body>
-    <input type="text" value="1" id="u_id" >
+    <script>var cameraOn = false; </script>
+    
+    <% for (var i in participant){ 
+      if(u_id == participant[i].mp_u_id){%>
+        <% if (participant[i].mp_type == "video") { %>
+          <script>var cameraOn = true; </script>
+      <%  } 
+      }
+    }%>
+    <% for (var i in guest){ 
+      if(g_id == guest[i].mp_guest_id){%>
+        <% if (guest[i].mp_type == "video") { %>
+          <script>var cameraOn = true; </script>
+      <%  } 
+      }
+    }%>
     <div class="main">
-      <div class="main__left">
-        <div class="main__videos" >
-          
+      <div class="main__left" >
+        <div class="social-share social-share-sticky"  data-share-url="https://meego-video-conferencing-t1.herokuapp.com" data-social-share="{'iconSrc': '/path/to/icons/', title': 'Page Title', image: '/path/to/image.jpg', 'description': 'Page Description'}">
+          <div class="btn-group dropright">
+            <button class="btn btn-outline-danger dropdown-toggle text-uppercase" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span id="socialShareBtnText" aria-hidden="true">Share</span>
+              <span class="sr-only">Share this page</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-multi"></div>
+          </div>
+        </div>
+
+        <div class="main__videos" id="screen">
+          <div id="screen-grid" class="Dish"></div>
           <div id="video-grid" class="Dish"></div>
+        </div>
+        <div class="main__videos" id="board" style="display:none">
+          <iframe src="//www.groupboard.com/gb/812991" width="100%" height="100%" scrolling="no" frameborder="0"></iframe>
         </div>
         <div class="main__controls">
           <div class="main__controls__block">
@@ -57,6 +97,7 @@
               <i class="fas fa-microphone"></i>
               <span>Mute</span>
             </div>
+
             <div
               onclick="playStop()"
               class="main__controls__button main__video_button"
@@ -67,7 +108,7 @@
           </div>
 
           <div class="main__controls__block">
-            <div class="main__controls__button main__share_button" id="shareButton" >
+            <div class="main__controls__button main__share_button" id="shareButton">
               <i class="fas fa-desktop"></i>
               <span >Share Screen</span>
             </div>
@@ -83,12 +124,28 @@
               <i class="fas fa-comment-alt"></i>
               <span>Chat</span>
             </div>
+            <div class="main__controls__button" onclick="showWhiteBoard()">
+              <i class="fas fa-chalkboard"></i>
+              <span>Whiteboard</span>
+            </div>
           </div>
           <div class="main__controls__block">
             <div class="main__controls__button">
-              <span onclick="leaveMeeting(mp_id)" class="leave_meeting"
-                >Leave Meeting</span
-              >
+              <% 
+              if(u_id ){ 
+                if(u_id = meeting[0].host_id){
+                %>
+                <span onclick="leaveMeeting('<%=meeting[0].m_id%>','<%=u_id%>','host')" class="leave_meeting">Leave Meeting</span>
+                <%}else {%>
+              
+                <span onclick="leaveMeeting('<%=meeting[0].m_id%>','<%=u_id%>','user')" class="leave_meeting">Leave Meeting</span>
+              <%}
+              }
+              if(g_id){ %>
+                <span onclick="leaveMeeting('<%=meeting[0].m_id%>','<%=g_id%>','guest')" class="leave_meeting">Leave Meeting</span>
+              <%}%>
+              </script>
+              
             </div>
           </div>
         </div>
@@ -96,14 +153,39 @@
       <div class="resizer" id="dragMe"></div>
      
 
-      <div class="main__right bside" id="chat" style="display:none">
+      <div class="main__right" id="chat" style="display:none">
         <div class="main__header">
           <h5>Chat</h5>
         </div>
         <div class="main__chat_window">
-          <ul class="messages"></ul>
+          
+
+          <ul style="list-style-type:none;padding-left: 0;">
+          <% if(typeof chat_message == 'object' && chat_message.length > 0){ %>
+                <% for(var i in chat_message){%>
+                  <script>
+                      var chat_type = "conversation";
+                      var cv_id = "<%= chat_message[0].cv_id%>";
+                  </script>
+                <li class="message"><b><%= chat_message[i].sender_name%></b><br/><%= chat_message[i].cm_content%></li>
+                <%}%>
+            <% } %>
+
+          <% if(typeof channel_message == 'object' && channel_message.length > 0){ %>
+            <% for(var i in channel_message){%>
+              <script>
+                var chat_type = "channel";
+                var c_id = "<%= channel_message[0].c_id%>";
+              </script>
+            <li class="message"><b><%= channel_message[i].sender_name%></b><br/><%= channel_message[i].ch_content%><br><a href="<%= channel_message[i].ch_file%>" download></a></li>
+            
+            <%}%>
+          <% } %>
+          </ul>
+          <ul class="messages"style="list-style-type:none;padding-left: 0;"></ul>
         </div>
         <div class="main__message_container">
+          
           <input
             type="text"
             id="chat_message"
@@ -111,25 +193,56 @@
           />
         </div>
       </div>
-      <div class="main__right bside" id="participant" style="display:none">
+      <div class="main__right " id="participant" style="display:none">
         <div class="main__header">
           <h5>Participant</h5>
         </div>
         <div class="main__participant_window">
           <div class= "table">
-           
+            <table class="table-responsive-md btn-table">
+              <tbody>
+                <%  for(var j in participant){ %> 
+                  
+                  <tr>
+                    <th><% if (participant[j].u_name == meeting[0].host_name){%> <i class="fas fa-chalkboard-teacher fa-2x"></i><%}else{%><i class="fas fa-user-tie fa-2x"></i><%}%></th>
+                    <td><img class="avatar-md" src="<%= participant[j].u_profilepic %>" data-toggle="tooltip" data-placement="top" title="<%= participant[j].u_name %>" alt="avatar"></td>
+                    <td><%= participant[j].u_name %></td>
+                    <td><%= moment(participant[j].mp_join_time).format( 'HH:mm') %></td>
+                  </tr>
+                <% } %>
+                <% for(var i in meeting) { %>
+                 <%  for(var k in guest){ %> 
+                  <tr>
+                    <th><i class="fas fa-user-secret fa-2x"></i></th>
+                    <td><img class="avatar-md" src="/dist/img/avatars/avatar-default1.jpg" data-toggle="tooltip" data-placement="top" title="<%= guest[k].g_name %>" alt="avatar"></td>
+                    <td><%= guest[k].g_name %></td>
+                    <td><%= moment(guest[k].g_date).format( 'HH:mm') %></td>
+                  </tr>
+                <%}%> 
+                 
+               <% } %>
+              </tbody>
+              
+              </table>
           </div>
         </div>
       </div>
-      <div class="main__right bside" id="record" >
+      <div class="main__right " id="record" >
         <div class="main__header">
-          <h5>Record</h5>
+          <h5>Info</h5>
         </div>
         <div class="main__record_window" id="recordPane">
           <hr>
-              <p>Meeting started :</p>
-              <ul class="records"></ul>
-              
+          <p>Meeting Code</p>
+          <p><%= meeting[0].m_code %></p>
+          <p>Host: <%= meeting[0].host_name %></p>
+          <p>Number of participant: <%= participant.length + guest.length %></p>
+          <p>Meeting started at <%= moment(meeting[0].m_stime).format( 'YYYY-MM-DD hh:mm A') %></p>
+          <hr>
+          <h5>Important!</h5>
+          <p> To collaborate at the whiteboard, enter password "Meego". </p>
+          
+
 
         </div>
         
@@ -137,9 +250,10 @@
       <!-- End meeting-->
 
     </div>
-
     <script src="dist/js/script.js"></script>
     <script src="dist/js/room.js"></script>
     <script src="dist/js/video.js"></script>
+    <script src="dist/js/socialshare.js"></script>
+    
   </body>
 </html>

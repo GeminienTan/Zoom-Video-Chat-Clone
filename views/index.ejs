@@ -6,12 +6,14 @@
 		<title>Sign In – Meego</title>
 		<meta name="description" content="#">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="google-signin-client_id" content="52704063809-8ltb87mf5h880505mofd1l6p0pdrhdgr.apps.googleusercontent.com">
 		<!-- Bootstrap core CSS -->
 		<link href="dist/css/lib/bootstrap.min.css" type="text/css" rel="stylesheet">
 		<!-- Swipe core CSS -->
 		<link href="dist/css/swipe.min.css" type="text/css" rel="stylesheet">
 		<!-- Favicon -->
 		<link href="dist/img/favicon.png" type="image/png" rel="icon">
+
 	</head>
 	<body class="start">
 		<main>
@@ -23,7 +25,8 @@
 							<div class="col-md-12">
 								<div class="content">
 									<h1>Welcome to Meego!</h1>
-								
+									<div id="my-signin2" class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true"></div>
+									<br>
 									<form action="home" method="POST">
 										<div class="form-group">
 											<input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required>
@@ -38,11 +41,15 @@
 											<input type="checkbox" onclick="showPassword()"> Show Password
 										</div>
 										<button type="submit" class="btn button">Sign In</button>
+
+										
+
 										<div class="callout">
 											<span>Don't have account? <a href="sign-up">Create Account</a></span>
 										</div>
 									</form>
-                 					<br>
+									
+									<br>
 									<h3>or Join a meeting now with Meeting ID:</h3>
 										<div class="w-50 mx-auto">
 										<div class="form-group">
@@ -76,13 +83,56 @@
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="dist/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-		<script>window.jQuery || document.write('<script src="dist/js/vendor/jquery-slim.min.js"><\/script>')</script>
+		<script src="https://apis.google.com/js/platform.js?onload=renderButton" async></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="dist/js/vendor/popper.min.js"></script>
 		<script src="dist/js/bootstrap.min.js"></script>
 		<script src="dist/js/home.js"></script>
 		<script src="https://npmcdn.com/js-alert/dist/jsalert.min.js"></script>
+		
 		<script>
+			/* Sign in button with Google */
+			function onSignIn(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			var token = profile.getId(); // Do not send to your backend! Use an ID token instead.
+			var u_name = profile.getName();
+			var u_profilepic = profile.getImageUrl();
+			var u_email = profile.getEmail();// This is null if the 'email' scope is not present.
+			
+			$.ajax({
+
+				url: "loginGoogle",
+				method: "POST",
+				data: {
+					u_name:u_name,
+					u_profilepic: u_profilepic,
+					u_email:u_email,
+					token:token
+				},
+				success:function(response){  
+					if(response.msg == 'success'){ 
+						window.location.href = "/home"
+					}
+				},  
+				error:function(response){  
+					alert('server error occured')  
+				}
+			});
+
+			};
+
+			function renderButton() {
+			gapi.signin2.render('my-signin2', {
+				'scope': 'profile email',
+				'width': 240,
+				'height': 50,
+				'longtitle': true,
+				'theme': 'dark',
+				'onsuccess': onSuccess,
+				'onfailure': onFailure
+			});
+			}
+
 			function showPassword() {
 				
 				var x = document.getElementById("password");
@@ -120,7 +170,7 @@
 
 			<% 
 			if (message=="success") { %> 
-				<script>JSAlert.alert("Account created succcessfulllPlease login again.");</script> 
+				<script>JSAlert.alert("Account created succcessful. Please login again.");</script> 
 			<% } 
 			} 
 		%>

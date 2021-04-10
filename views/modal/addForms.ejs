@@ -143,14 +143,11 @@
                     <div class="form-group">
                         <label for="recipient">Recipient:</label>
                        
-                         <input list="receivers" class="form-control" id="receiver" name="receiver" >
-                         <!-- DataList -->
-                        <datalist id="receivers">
-                        <% for (var i in contact){%>
-                            <option value="<%= contact[i].u_name %>"></option>
-                        <%} %>
-                        </datalist>
-                        
+                         <select class="form-control" id="receiver" name="receiver" >
+                            <% for (var i in contact){%>
+                                <option value="<%= contact[i].u_name %>"><%= contact[i].u_name %></option>
+                            <%} %>
+                         </select>
                     </div>
                     <div class="form-group">
                         <label for="message">Message:</label>
@@ -173,7 +170,7 @@
                 <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
             </div>
             <div class="content">
-                <form action="addSchedule" method="POST" >
+                <form action="addSchedule" method="POST" id="addSchedule">
                     <input type="text" class="form-control" name="owner_id" value="<%= u_id %>" hidden>
                     <div class="form-group">
                         <label for="user">Meeting Title</label>
@@ -208,7 +205,7 @@
                             <%} %> 
                         </select>
                     </div>
-                    <button type="submit" class="btn button w-100">Add Schedule</button>
+                    <button id="addScheduleButton" type="submit" class="btn button w-100">Add Schedule</button>
                 </form>
             </div>
         </div>

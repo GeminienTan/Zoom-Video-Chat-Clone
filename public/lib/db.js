@@ -1,10 +1,20 @@
 const mysql = require("mysql");
 
-const mysqlConnection = mysql.createPool({
-    host:'us-cdbr-east-03.cleardb.com',
-    user:'bd90389038c837',
-    password:'8f816f80',
-    database:'heroku_09a0187dc7dd1e7',
+const mysqlConnection = mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'',
+    database:'video_conferencing',
+    multipleStatements: true
+  
   })
+
+mysqlConnection.connect(function(error){
+	if(!!error) {
+		console.log(error);
+	} else {
+		console.log('Database connected');
+	}
+});
 
 module.exports = mysqlConnection;

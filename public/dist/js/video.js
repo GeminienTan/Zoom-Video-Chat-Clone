@@ -18,7 +18,7 @@ function Dish() {
 
     // variables:
         let Margin = 2;
-        let Scenary = document.getElementById('Dish');
+        let Scenary = document.getElementById('video-grid');
         let Width = Scenary.offsetWidth - (Margin * 2);
         let Height = Scenary.offsetHeight - (Margin * 2);
         let Cameras = document.getElementsByTagName('Video');
@@ -56,3 +56,14 @@ window.addEventListener("load", function (event) {
     Dish();
     window.onresize = Dish;
 }, false);
+/*
+$('#video-grid video').addEventListener("click", event => {
+    //const video = event.target;
+    
+    if (div.requestFullscreen) 
+	    div.requestFullscreen();
+    else if (div.webkitRequestFullscreen) 
+    	div.webkitRequestFullscreen();
+    else if (div.msRequestFullScreen) 
+      div.msRequestFullScreen();
+});*/

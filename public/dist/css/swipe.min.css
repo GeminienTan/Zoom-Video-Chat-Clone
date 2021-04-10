@@ -39,4 +39,15 @@ a,img{-moz-transition:all .3s;-webkit-transition:all .3s}a,a:hover{text-decorati
     margin-right: 50px;
     content: "✖";
   }
+  .g-signin2{
+    width: 100%;
+  }
+  
+  .g-signin2 > div{
+    margin: 0 auto;
+  }
 
+ .preview ol{
+  list-style-type:none;
+  padding: 0;
+}

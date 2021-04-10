@@ -1,6 +1,13 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
 const myVideo = document.createElement("video");
+var username;
+if(u_name !=undefined && u_name !=""){
+  username = u_name;
+}
+else if(g_name !=undefined && g_name !=""){
+  username = g_name;
+}
 
 myVideo.addEventListener("resize", ev => {
   let w = myVideo.videoWidth;
@@ -10,9 +17,10 @@ myVideo.addEventListener("resize", ev => {
     myVideo.style.width = "400px";
     myVideo.style.height = h;
     myVideo.style.border = "thick solid #852FF5";
-    myVideo.style.backgroundColor = "#852FF5";
+    //myVideo.style.backgroundColor = "#852FF5";
   }
 }, false);
+
 myVideo.muted = true;
 
 // while deploying change port to 443,
@@ -20,7 +28,7 @@ myVideo.muted = true;
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",
-  port: "443",
+  port: "3030",
 });
 const peers = {}
 
@@ -36,7 +44,7 @@ navigator.mediaDevices
   .then((stream) => {
     myVideoStream = stream;
     muteUnmute();
-    playStop();
+    checkCamera();
     addVideoStream(myVideo, stream);
 
     peer.on("call", (call) => {
@@ -53,20 +61,20 @@ navigator.mediaDevices
       }, 1000)
       //alert("someone enter" + userId);
     });
-
     let msg = $("#chat_message");
     $("html").keydown((e) => {
       if (e.which === 13 && msg.val().length !== 0) {
-        socket.emit("message", msg.val());
+        //addChat(msg.val());
+        socket.emit("message", msg.val(),username);
         msg.val("");
       }
     });
 
-    socket.on("createMessage", (message, userId) => {
+    socket.on("createMessage", (message, userId,userName) => {
       $(".messages").append(
-        `<li class="message"><b>user</b><br/>${message}</li>`
+        `<li class="message"><b>${username}</b><br/>${message}</li>`
       );
-      scroolToBottom();
+      scrollToBottom();
     });
 
   });
@@ -104,7 +112,7 @@ const connectToNewUser = (userId, stream) => {
   peers[userId] = call
 };
 
-const scroolToBottom = () => {
+const scrollToBottom = () => {
   var d = $(".main__chat_window");
   d.scrollTop(d.prop("scrollHeight"));
 };
@@ -138,6 +146,7 @@ const setUnmuteButton = () => {
 
 const playStop = () => {
   let enabled = myVideoStream.getVideoTracks()[0].enabled;
+
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
     setPlayVideo();
@@ -146,6 +155,18 @@ const playStop = () => {
     myVideoStream.getVideoTracks()[0].enabled = true;
   }
 };
+
+const checkCamera = () => {
+  
+  if(cameraOn == true){
+    setStopVideo();
+    myVideoStream.getVideoTracks()[0].enabled = true;
+  }
+  else if(cameraOn == false){
+    myVideoStream.getVideoTracks()[0].enabled = false;
+    setPlayVideo();
+  }
+}
 
 const setStopVideo = () => {
   const html = `
@@ -207,6 +228,12 @@ document.addEventListener("DOMContentLoaded", function () {
   dragElement(document.getElementById("dragMe"), "H");
 });
 
+const addChat = (msg) => {
+  alert(msg);
+  alert(chat_type);
+  alert(c_id);
+  alert(cv_id);
+}
 
 
 

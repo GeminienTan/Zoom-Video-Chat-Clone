@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+		<meta charset="utf-8">
+		<title>Sign In – Guest Meego</title>
+		<meta name="description" content="#">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap core CSS -->
+		<link href="../dist/css/lib/bootstrap.min.css" type="text/css" rel="stylesheet">
+		<!-- Swipe core CSS -->
+		<link href="../dist/css/swipe.min.css" type="text/css" rel="stylesheet">
+		<!-- Favicon -->
+		<link href="../dist/img/favicon.png" type="image/png" rel="icon">
+	</head>
+	<body class="start">
+		<main>
+            <!-- Image and text -->
+            <nav class="navbar navbar-light cside">
+                <!--<a class="navbar-brand" href="#">
+                  <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+                </a>-->
+                <h6> Meego User : 
+                    <span class="text-dark"><%= user %></span> Meego Points Accumulated:
+                    <a class='btn-lg bg-dark'>
+                      <%= points %></a>
+                  </h6>
+              </nav>
+			<div class="layout">
+				<!-- Start of Sign In -->
+				<div class="main d-flex justify-content-center bg-dark">
+					<div class="start">
+						<div class="container">
+							<div class="row align-items-center">
+                                <div class="col-4">
+                                    <div class="card-header pull-left text-white border border-light">
+                                        Checkers
+                                    </div>
+                                    <div id="game1" class="card text-white cside" style="display:none">
+                                        <iframe
+                                        style="width: inherit; height: 500px; overflow: hidden;"
+                                        src="https://playpager.com/embed/checkers/index.html"
+                                        scrolling="no">
+                                        </iframe>
+                                    </div>
+                                    <div id="message1" class="card text-white cside">
+                                        <span
+                                        style="width: inherit; height: 500px; overflow: hidden;"
+                                        scrolling="no"><h2>Unlock if points reach 500.</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card-header pull-left text-white border border-light">
+                                        Reversi
+                                    </div>
+                                    <div id="game2" class="card text-white cside" style="display:none">
+                                        <iframe
+                                        style="width: inherit; height: 500px; overflow: hidden;"
+                                        src="https://playpager.com/embed/reversi/index.html"
+                                        scrolling="no">
+                                        </iframe>
+                                    </div>
+                                    <div id="message2" class="card text-white cside">
+                                        <span
+                                        style="width: inherit; height: 500px; overflow: hidden;"
+                                        scrolling="no"><h2>Unlock if points reach 300.</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card-header pull-left text-white border border-light">
+                                        Chess
+                                    </div>
+                                    <div id="game3" class="card text-white cside" style="display:none">
+                                        <iframe
+                                        style="width: inherit; height: 500px; overflow: hidden;"
+                                        src="https://playpager.com/embed/chess/index.html"
+                                        scrolling="no">
+                                        </iframe>
+                                    </div>
+                                    <div id="message3" class="card text-white cside">
+                                        <span
+                                        style="width: inherit; height: 500px; overflow: hidden;"
+                                        scrolling="no"><h2>Unlock if points reach 500.</h2>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+					</div>
+				</div>
+				<!-- End of Sign In -->
+			</div> <!-- Layout -->
+		</main>
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../dist/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script>window.jQuery || document.write('<script src="dist/js/vendor/jquery-slim.min.js"><\/script>')</script>
+		<script src="../dist/js/vendor/popper.min.js"></script>
+		<script src="../dist/js/bootstrap.min.js"></script>
+		<script src="https://npmcdn.com/js-alert/dist/jsalert.min.js"></script>
+        <script>
+            const points = parseInt("<%=points%>");
+            const game1 = document.getElementById('game1');
+            const game2 = document.getElementById('game2');
+            const game3 = document.getElementById('game3');
+            const message1 = document.getElementById('message1');
+            const message2 = document.getElementById('message2');
+            const message3 = document.getElementById('message3');
+            if(points >=100){
+                game1.style.display="block";
+                message1.style.display="none";
+            }
+            if(points >=300){
+                game2.style.display="block";
+                message2.style.display="none";
+            }
+            if(points >=500){
+                game3.style.display="block";
+                message3.style.display="none";
+            }
+        </script>
+	</body>
+
+</html>
+

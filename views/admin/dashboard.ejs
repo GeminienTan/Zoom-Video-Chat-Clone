@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Automate Data Processing Web Application</title>
+<title>Meego Administrative Dashboard</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -10,6 +10,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://npmcdn.com/js-alert/dist/jsalert.min.js"></script>
+
+
 <style>
 body, html {
   height: 100%;
@@ -26,7 +29,7 @@ table,th,td {
 
 .topnav {
 	overflow: hidden;
-	background-color: #f1f1f1;
+	background:linear-gradient(145deg,rgba(140,167,255,1) 0,rgba(139,84,249,1) 50%,rgba(131,33,243,1) 100%);
 }
 
 .topnav a {
@@ -79,7 +82,7 @@ table,th,td {
 
 .topnav a:hover,
 .dropdown:hover .dropbtn {
-	background-color: #ff002b;
+	background-color: #9865FD;
 	color: white;
 }
 
@@ -141,99 +144,54 @@ table,th,td {
 <body>
 	<!-- Navigation Bar -->
 	<div class="topnav" id="myTopnav">
-		<div class="dropdown">
-			<button class="dropbtn">Station List <i class="fa fa-caret-down"></i></button>
-			<div class="dropdown-content">
-				<a href="stationList.php?Location='Yellowstone Status EXT I'">Yellowstone EXT I</a>
-				<a href="stationList.php?Location='Yellowstone Status EXT II'">Yellowstone EXT II</a>
-			</div>
-		</div>
-		<div class="dropdown">
-			<button class="dropbtn">Issue Tracker <i class="fa fa-caret-down"></i>
-			</button>
-			<div class="dropdown-content">
-				<a href="issueTracker.php?Location='Yellowstone Status EXT I'">Yellowstone EXT I</a>
-				<a href="issueTracker.php?Location='Yellowstone Status EXT II'">Yellowstone EXT II</a>
-			</div>
-		</div>
-		<div class="dropdown">
-			<button class="dropbtn">Slot Error <i class="fa fa-caret-down"></i>
-			</button>
-			<div class="dropdown-content">
-				<a href="slotError.php?Location='Yellowstone Status EXT I'">Yellowstone EXT I</a>
-				<a href="slotError.php?Location='Yellowstone Status EXT II'">Yellowstone EXT II</a>
-			</div>
-		</div>
-		<a href="errorMessageSummary.php">Error Message Summary</a>
-		<a href="errorList.php">Error List</a>
-		<a href="report.php">Report</a>
-		<a href="index.php" class="logo w3-right"><img height=80 src="images/Keysight_Signature_Pref_Color.png"></a>
-		<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+		<a href="/admin/dashboard" class="logo w3-left"><img height=80 src="../dist/img/meego-logo.png"></a>
+		<a href="getAllUser">User List</a>
+		<a href="getAllGuest">Guest List</a>
+		<a href="getAllAdmin">Admin List</a>
+		<a href="getAllFeedback">Feedback</a>
+		<a onclick="logout()" class="w3-right">Logout</a>
 	</div>
 	<br>
   <!-- Page Header -->
-	<h2 align="center"> Meego Dashboard</h2>
+	<h2 align="center">Meego Administrative Dashboard</h2>
 
 	<!-- Page Content -->
 	<div class="w3-main">
-		<div class="w3-half w3-center">
-			<header class="w3-container" style="padding-top:22px">
-				<h5><b>Total User</b></h5>
-			</header>
-		</div>
-		<div class="w3-half w3-center">
-			<header class="w3-container" style="padding-top:22px">
-				<h5><b>Total Guest</b></h5>
-			</header>
-		</div>
-		<div class="w3-row-padding w3-margin-bottom">
-			<div class="w3-quarter">
-				<div class="w3-container w3-blue w3-padding-16">
-					<div class="w3-right">
-						<h3 id="online_ys1"></h3>
-					</div>
-					<div class="w3-left"></div>
-					<h4>Male</h4>
-				</div>
-			</div>
-			<div class="w3-quarter">
-				<div class="w3-container w3-red w3-padding-16">
-					<div class="w3-right">
-						<h3 id="offline_ys1"></h3>
-					</div>
-					<div class="w3-left"></div>
-					<h4>Female</h4>
-				</div>
-			</div>
-			<div class="w3-quarter">
-				<div class="w3-container w3-blue w3-padding-16">
-					<div class="w3-right">
-						<h3 id="online_ys2"></h3>
-					</div>
-					<div class="w3-left"></div>
-					<h4>Male</h4>
-				</div>
-			</div>
-			<div class="w3-quarter">
-				<div class="w3-container w3-red w3-text-white w3-padding-16">
-					<div class="w3-right">
-						<h3 id="offline_ys2"></h3>
-					</div>
-					<div class="w3-left"></div>
-					<h4>Female</h4>
-				</div>
-			</div>
-		</div>
     <!-- Graph and Table Yellowstone EXT I -->
 		<div class="w3-panel">
 			<div class="w3-row-padding" style="margin:0 -16px">
 				<div class="w3-half" style="height: 300px">
-					<h5>Total Number of registered account by Age Group</h5>
+					<h5>Distribution of Meego Users by Gender</h5>
 					<canvas id="ys_1"></canvas>
 				</div>
 				<div class="w3-half" style="margin-top:60px">
-					<h5 class="w3-center">Age Group</h5>
+					<h5 class="w3-center">Gender</h5>
 					<table id="table_ys1" data-id="table_ys1" class="w3-table w3-white w3-hoverable w3-bordered">
+						<tr class="showDetails">
+							<td><span class="w3-btn" style="background-color:#FF6384"></span></td>
+							<td>Female</td>
+							<td>0</td>
+						</tr>
+						<tr class="showDetails">
+							<td><span class="w3-btn" style="background-color:#36A2EB"></span></td>
+							<td>Male</td>
+							<td>0</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<hr>
+    <!-- Graph and Table Yellowstone EXT II -->
+		<div class="w3-panel">
+			<div class="w3-row-padding" style="margin:0 -16px">
+				<div class="w3-half" style="height: 300px">
+					<h5>Distribution of Meego Users by Age Group</h5>
+					<canvas id="ys_2"></canvas>
+				</div>
+				<div class="w3-half" style="margin-top:60px">
+					<h5 class="w3-center">Age Group </h5>
+					<table id="table_ys2" data-id="table_ys2" class="w3-table w3-white w3-hoverable w3-bordered">
 						<tr class="showDetails">
 							<td><span class="w3-btn" style="background-color:#FF6384"></span></td>
 							<td>Children (0-14 years old)</td>
@@ -264,60 +222,6 @@ table,th,td {
 			</div>
 		</div>
 		<hr>
-    <!-- Graph and Table Yellowstone EXT II -->
-		<div class="w3-panel">
-			<div class="w3-row-padding" style="margin:0 -16px">
-				<div class="w3-half" style="height: 300px">
-					<h5>Total Number of registered account by </h5>
-					<canvas id="ys_2"></canvas>
-				</div>
-				<div class="w3-half" style="margin-top:60px">
-					<h5 class="w3-center">Yellowstone EXT II </h5>
-					<table id="table_ys2" data-id="table_ys2" class="w3-table w3-white w3-hoverable w3-bordered">
-						<tr class="showDetails">
-							<td><span class="w3-btn" style="background-color:#FF6384"></span></td>
-							<td>Online</td>
-							<td></td>
-						</tr>
-						<tr class="showDetails">
-							<td><span class="w3-btn" style="background-color:#FF9F40"></span></td>
-							<td>On hold</td>
-							<td>0</td>
-						</tr>
-						<tr class="showDetails">
-							<td><span class="w3-btn" style="background-color:#4BC0C0"></span></td>
-							<td>Out of service</td>
-							<td>0</td>
-						</tr>
-						<tr class="showDetails">
-							<td><span class="w3-btn" style="background-color:#36A2EB"></span></td>
-							<td>SPC due</td>
-							<td>0</td>
-						</tr>
-						<tr class="showDetails">
-							<td><span class="w3-btn" style="background-color:#9966FF"></span></td>
-							<td>SPC due (within grace period)</td>
-							<td>0</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<hr>
-    <!-- Modal -->
-		<div id="details_modal" class="w3-modal ">
-			<div class="w3-modal-content">
-				<span id="close_modal" class="w3-button w3-display-topright">&times;</span>
-				<table border=1 id="details_table" class="display nowrap" style="width:100%">
-					<tr>
-						<th>Username</th>
-						<th>Email</th>
-						<th>Status</th>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
 	<!-- End page content -->
 	</div>
   
@@ -326,28 +230,29 @@ table,th,td {
 	var today = tday.getFullYear() + "-" + ('0' + (tday.getMonth() + 1)).slice(-2) + "-" + ('0' + tday.getDate()).slice(-2);
 	$(document).ready(function() {
 		$.ajax({
-			url: "stationAvailability_ys1.php",
-			method: "POST",
+			url: "/admin/getUserDataByGender",
+			method: "GET",
 			success: function(data) {
 				var data = JSON.parse(data);
-				var CurrentStatus = [];
+				var Gender = [];
 				var Count = [];
+
 				for(var i in data) {
-					if(data[i].CurrentStatus == 'None') {
-						CurrentStatus.push('Online');
-						Count.push(data[i].Count);
-					} else {
-						CurrentStatus.push(data[i].CurrentStatus);
-						Count.push(data[i].Count);
+					if(data[i].gender == 'F') {
+						Gender.push('Female');
+						Count.push(data[i].count);
+					}else if(data[i].gender == 'M') {
+						Gender.push('Male');
+						Count.push(data[i].count);
 					}
 				}
 				var chartdata = {
-					labels: CurrentStatus,
+					labels: Gender,
 					datasets: [{
 						barThickness: 6,
 						label: '',
-						backgroundColor: ['#FF6384', '#FF9F40', '#4BC0C0', '#36A2EB', '#9966FF'],
-						hoverBackgroundColor: ['#FFE0E6', '#FFECD9', '#DBF2F2', '#D7ECFB', '#EBE0FF'],
+						backgroundColor: ['#FF6384', '#36A2EB'],
+						hoverBackgroundColor: ['#FFE0E6', '#36A2EB'],
 						hoverBorderColor: '#666666',
 						data: Count
 					}]
@@ -360,7 +265,7 @@ table,th,td {
 						maintainAspectRatio: false,
 						title: {
 							display: true,
-							text: 'Station Availability ' + today
+							text: 'Total Number of user ' + today
 						},
 						legend: {
 							display: false
@@ -372,42 +277,49 @@ table,th,td {
 									maxRotation: 0,
 									minRotation: 0
 								}
+							}],
+							yAxes: [{
+								ticks: {
+									min: 0,
+									precision:0
+								}
 							}]
 						}
 					}
 				});
 				for(i in Count) {
-					document.getElementById("table_ys1").rows[i].cells.item(1).innerHTML = CurrentStatus[i]
+					document.getElementById("table_ys1").rows[i].cells.item(1).innerHTML = Gender[i]
 					document.getElementById("table_ys1").rows[i].cells.item(2).innerHTML = Count[i]
 				}
-			
-				var online = Count[0] + Count[4];
-				var offline = Count[1] + Count[2] + Count[3];
-				document.getElementById("online_ys1").innerHTML = online
-				document.getElementById("offline_ys1").innerHTML = offline
 			},
 			error: function(data) {
 				console.log(data);
 			}
 		});
+
 		$.ajax({
-			url: "stationAvailability_ys2.php",
-			method: "POST",
+			url: "/admin/getUserDataByAgeGroup",
+			method: "GET",
 			success: function(data) {
 				var data = JSON.parse(data);
-				var CurrentStatus = [];
+				var  defaultAgeGroup = ["0-14","15-24","25-54","55-64","65 years and over"];
+
+				var AgeGroup = [];
 				var Count = [];
+
 				for(var i in data) {
-					if(data[i].CurrentStatus == 'None') {
-						CurrentStatus.push('Online');
-						Count.push(data[i].Count);
-					} else {
-						CurrentStatus.push(data[i].CurrentStatus);
-						Count.push(data[i].Count);
-					}
+						AgeGroup.push(data[i].age_group);
+						Count.push(data[i].count);
 				}
+
+				let difference = defaultAgeGroup.filter(x => !AgeGroup.includes(x));
+				if(difference.length!=0){
+					AgeGroup.push(difference);
+					Count.push(0);
+				}
+
 				var chartdata = {
-					labels: CurrentStatus,
+					labels: AgeGroup,
 					datasets: [{
 						barThickness: 6,
 						label: '',
@@ -425,7 +337,7 @@ table,th,td {
 						maintainAspectRatio: false,
 						title: {
 							display: true,
-							text: 'Station Availability ' + today
+							text: 'Total Number of user ' + today
 						},
 						legend: {
 							display: false
@@ -437,23 +349,27 @@ table,th,td {
 									maxRotation: 0,
 									minRotation: 0
 								}
+							}],
+							yAxes: [{
+								ticks: {
+									min: 0,
+									precision:0
+								}
 							}]
 						}
 					}
 				});
-				for(i in Count) {
+				for(i in AgeGroup) {
+					document.getElementById("table_ys2").rows[i].cells.item(1).innerHTML = AgeGroup[i]
 					document.getElementById("table_ys2").rows[i].cells.item(2).innerHTML = Count[i]
 				}
-				var online = Count[0] + Count[4];
-				var offline = Count[1] + Count[2] + Count[3];
-				document.getElementById("online_ys2").innerHTML = online
-				document.getElementById("offline_ys2").innerHTML = offline
 			},
 			error: function(data) {
 				console.log(data);
 			}
 		});
 	});
+		
 	var canvas = document.querySelector('canvas');
 	fitToContainer(canvas);
 
@@ -465,50 +381,10 @@ table,th,td {
 		canvas.width = canvas.offsetWidth;
 		canvas.height = canvas.offsetHeight;
 	}
-	$(".showDetails").click(function() {
-		var table = $(this).parent().parent().data("id");
-		var location;
-		if(table == "table_ys1") {
-			location = "Yellowstone Status EXT I";
-		} else if(table == "table_ys2") {
-			location = "Yellowstone Status EXT II";
-		}
-		var values = $(this).find('td').map(function() {
-			return $(this).text();
-		});
-		var status = values[1];
-		if(status == "Online") {
-			status = "None";
-		}
-		$.ajax({
-			url: "stationAvailability_details.php",
-			method: "POST",
-			data: {
-				status: status,
-				location: location
-			},
-			success: function(data) {
-				var data = JSON.parse(data);
-				for(i in data) {
-					var html = '<tr>';
-					html += '<td><a class="w3-text-blue" href="errorMessageSummary.php?Hostname=' + data[i].Hostname + '">' + data[i].Hostname + '</a></td>';
-					html += '<td>' + data[i].Slot + '</td>';
-					html += '<td>' + data[i].StationType + '</td>';
-					html += '<tr>';
-					$('#details_table').append(html);
-				}
-			},
-			error: function(data) {
-				console.log(data);
-			}
-		});
-		document.getElementById('details_modal').style.display = 'block';
-	});
-	$("#close_modal").click(function() {
-		document.getElementById('details_modal').style.display = 'none';
-		$('#details_table').find("tr:gt(0)").remove();
-	});
+	
 	</script>
+	<script src="../dist/js/admin.js"></script>
+	<script src="../dist/js/validatePassword.js"></script>
 </body>
 
 </html>

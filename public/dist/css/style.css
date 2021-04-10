@@ -66,11 +66,12 @@ body {
     display: flex;
     flex-direction: column;
     width: 20%;
-    background-color: #242324;
+    background:linear-gradient(145deg,rgba(140,167,255,1) 0,rgba(139,84,249,1) 50%,rgba(131,33,243,1) 100%);
     border-left: 1px solid #3d3d42;
     flex: 1 1 auto;
     height: 100%;
     min-width: 200px;
+    padding-left: 10px;
   }
 
   .main__header {
@@ -83,22 +84,15 @@ body {
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
   }
-  
   .main__message_container input {
-    flex-grow: 1;
     background-color: white;
-    border: none;
     color: black;
     outline-width: 0;
+    margin-bottom: 20px;
   }
   
   #record, #participant,#chat{
     overflow-y: scroll;
-  }
-  
-  .messages {
-    color: white;
-    list-style: none;
   }
   
   .unmute,
@@ -266,5 +260,13 @@ body {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
+}
+.fullSize {
+  height: 880px;
+  width: 1200px;
+}
+
+.status{
+  position:absolute;left:-3px;bottom:-3px;font-size:16px;
 }
   
